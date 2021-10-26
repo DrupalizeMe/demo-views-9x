@@ -1,0 +1,5 @@
+administer subscriber:
+  title: 'Administer subscriber settings'
+  restrict access: true
+access subscriber overview:
+  title: 'Access subscriber overview page'

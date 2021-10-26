@@ -1,0 +1,11 @@
+# All config in this file should be prefixed with `views.` followed by the
+# plugin type?
+
+# 'relative_date_filter' should match your plugin name.
+views.filter_value.relative_date_filter:
+  type: mapping
+  label: 'Relative Date Filter'
+  mapping:
+    relative_date: #matches machine name of the form element
+      type: string
+      label: 'Relative Date Filter'

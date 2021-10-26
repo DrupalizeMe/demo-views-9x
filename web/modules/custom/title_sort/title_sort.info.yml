@@ -1,0 +1,8 @@
+name: Custom title sort
+type: module
+description: 'Custom title sort plugin.'
+core: 8.x
+core_version_requirement: ^8 || ^9
+package: 'Custom'
+dependencies:
+  - drupal:views

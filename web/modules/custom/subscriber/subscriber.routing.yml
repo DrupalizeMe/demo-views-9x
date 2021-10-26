@@ -1,0 +1,7 @@
+entity.subscriber.settings:
+  path: 'admin/structure/subscriber'
+  defaults:
+    _form: '\Drupal\subscriber\Form\SubscriberSettingsForm'
+    _title: 'Subscriber'
+  requirements:
+    _permission: 'administer subscriber'

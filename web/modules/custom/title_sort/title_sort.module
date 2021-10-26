@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function title_sort_views_data_alter(array &$data) {
+  $data['node_field_data']['natural_title_sort'] = [
+    'title' => t('Natural title sort'),
+    'group' => t('Content'),
+    'help' => t('Sort titles naturally'),
+    'sort' => [
+      'field' => 'title',
+      'id' => 'natural_title_sort',
+    ],
+  ];
+}

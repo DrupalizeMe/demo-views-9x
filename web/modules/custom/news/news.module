@@ -1,0 +1,177 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for News module.
+ */
+
+use Drupal\core\form\FormStateInterface;
+
+/**
+ * Implements hook_views_data().
+ */
+function news_views_data() {
+  $data = [];
+  $data['news_subs'] = [];
+
+  // Describe a single database table named news_subs.
+  $data['news_subs']['table'] = [
+    // Human readable name of this table used in the Views UI to prefix fields,
+    // filters, etc. Example: "News subscriptions: Email". This string should
+    // be translatable.
+    'group' => t('News subscriptions'),
+
+    // Name of the module that provides the table schema.
+    'provider' => 'news',
+
+    // A table can be a "base" table, meaning that in Views you can use it as
+    // base for a View. Non-base tables can be associated to a base table via
+    // a relationship. The primary table for your custom data should be a base
+    // table. Add the "base" key with the following properties:
+    'base' =>  [
+      // Identifier (primary) field in this table for Views.
+      'field' => 'email',
+      // Label in the UI.
+      'title' => t('News subscriptions'),
+      // Longer description in the UI. Required.
+      'help' => t('News subscriptions custom table'),
+    ]
+  ];
+
+  // Other top level elements of the news_subs array define the individual
+  // columns of the table that you want to make available to Views. The key is
+  // the name (and must be unique) used by Views. It's usually the same as the
+  // name of the database column it describes. But doesn't have to be. It's
+  // possible to created computed fields that are not a one-to-one relationship
+  // to a column in the database. For example, a field that contains a link to
+  // edit a record from the table.
+  //
+  // The, 'title', and 'help' elements are required.
+  //
+  // Each field definition needs to describe the views plugins (frequently
+  // called "handlers") that are responsible for handling the fields data in
+  // different scenarios including: field, filter, sort, argument, area, and
+  // relationship. All of which are optional.
+  $data['news_subs']['email'] = [
+    // Human readable name of the field that will be displayed in the UI.
+    'title' => t('Email'),
+    // Required help text that describes the content of the field.
+    'help' => t('Subscription email.'),
+    // Optional handler to use when displaying a field. This maps to what a user
+    // will see in the "Fields" section of the Views configuration UI. Specify
+    // this if you want a user to be able to display the content of this field.
+    'field' => [
+      // ID of field handler plugin to use. More information about this below.
+      'id' => 'standard',
+    ],
+    // Optional handler to use when sorting field data. This maps to what a user
+    // will see in the "Sort criteria" section of the Views configuration UI.
+    // Specify this if you want a user to be able to sort a Views results based
+    // on the content of this field.
+    'sort' => [
+      'id' => 'standard',
+    ],
+    // Optional handler to use when filtering results based on a field. This
+    // maps to what a user will see in the "Filter criteria" section of the
+    // Views configuration UI. Specify this if you want a user to be able to
+    // filter a Views results based on the content of this field.
+    'filter' => [
+      'id' => 'string',
+    ],
+    // Optional handler to use when making this field available as an argument.
+    // This maps to what a user will see in the "Contextual filters" section of
+    // the Views configuration UI. Specify this if you want a user to be able to
+    // use this field in contextual filters.
+    'argument' => [
+      'id' => 'string',
+    ],
+  ];
+
+  // More examples of field descriptions.
+  $data['news_subs']['first_name'] = [
+    'title' => t('First name'),
+    'help' => t('Subscriber\'s first name.'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+    'argument' => [
+      'id' => 'string',
+    ],
+  ];
+
+  $data['news_subs']['last_name'] = [
+    'title' => t('Last name'),
+    'help' => t('Subscriber\'s last name.'),
+    'field' => [
+      'id' => 'standard',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'filter' => [
+      'id' => 'string',
+    ],
+    'argument' => [
+      'id' => 'string',
+    ],
+  ];
+
+  $data['news_subs']['created'] = [
+    'title' => t('Created'),
+    'help' => t('Subscription date'),
+    'field' => [
+      'id' => 'subscribed_views_field',
+    ],
+    'sort' => [
+      'id' => 'date',
+    ],
+    'filter' => [
+      'id' => 'relative_date_filter',
+      'title' => t('Subscription length'),
+      'group' => t('Content'),
+      'help' => t('Show subscribers that subscribed last week or month.'),
+      // This matches the real field.
+      'field' => 'created',
+    ],
+    'argument' => [
+      'id' => 'date',
+    ],
+  ];
+
+  $data['news_subs']['is_active'] = [
+    'title' => t('Is Active?'),
+    'help' => t('Is it an active subscriber?'),
+    'field' => [
+      'id' => 'boolean',
+    ],
+    'sort' => [
+      'id' => 'numeric',
+    ],
+    'filter' => [
+      'id' => 'boolean',
+    ],
+    'argument' => [
+      'id' => 'standard',
+    ],
+  ];
+
+  return $data;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function news_theme($existing, $type, $theme, $path) {
+  \Drupal::moduleHandler()->loadInclude('news', 'inc', 'news.theme');
+  return [
+    'views_view_accordion' => [
+      'file' => 'news.theme.inc',
+    ],
+  ];
+}

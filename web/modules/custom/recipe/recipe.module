@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function recipe_views_data_alter(array &$data) {
+  // This 'full_time' field is a pseudo field and doesn't correspond with any
+  // specific database table. Instead, it's data is computed by adding together
+  // the values of the `field_cook_time` and `field_prep_time` fields on the
+  // 'recipe' content type.
+  // @see \Drupal\recipe\Plugin\views\field\FullTime.
+  $data['node']['full_time'] = [
+    'title' => t('Full cook and prep time'),
+    'field' => [
+      'title' => t('Full cook and prep time'),
+      'help' => t('Total value of cook and prep time. <em>Appears on Recipe nodes only.</em>'),
+      'id' => 'full_time',
+    ],
+  ];
+}

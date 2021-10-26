@@ -1,0 +1,10 @@
+entity.subscriber.settings:
+  title: Subscriber
+  description: Configure a Subscriber entity type
+  route_name:  entity.subscriber.settings
+  parent: system.admin_structure
+entity.subscriber.collection:
+  title: Subscribers
+  description: List of subscribers
+  route_name: entity.subscriber.collection
+  parent: system.admin_content

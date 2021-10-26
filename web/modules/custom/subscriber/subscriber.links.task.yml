@@ -1,0 +1,22 @@
+entity.subscriber.settings:
+  title: Settings
+  route_name: entity.subscriber.settings
+  base_route: entity.subscriber.settings
+entity.subscriber.view:
+  title: View
+  route_name: entity.subscriber.canonical
+  base_route: entity.subscriber.canonical
+entity.subscriber.edit_form:
+  title: Edit
+  route_name: entity.subscriber.edit_form
+  base_route: entity.subscriber.canonical
+entity.subscriber.delete_form:
+  title: Delete
+  route_name: entity.subscriber.delete_form
+  base_route: entity.subscriber.canonical
+  weight: 10
+entity.subscriber.collection:
+  title: Subscriber
+  route_name: entity.subscriber.collection
+  base_route: system.admin_content
+  weight: 10

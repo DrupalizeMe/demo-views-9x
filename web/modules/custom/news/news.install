@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the News module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function news_schema() {
+  $schema['news_subs'] = [
+    'description' => 'Newsletter subscriptions',
+    'fields' => [
+      'first_name' => [
+        'description' => 'First Name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'last_name' => [
+        'description' => 'Last Name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'email' => [
+        'description' => 'Email',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'created' => [
+        'description' => 'Created',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'is_active' => [
+        'description' => 'Is Active?',
+        'type' => 'int',
+        'size' => 'tiny',
+        'default' => 0,
+        'not null' => TRUE,
+      ],
+    ],
+  ];
+
+  return $schema;
+}

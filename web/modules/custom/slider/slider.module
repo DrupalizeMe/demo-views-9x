@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for slider module.
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\views\Plugin\views\cache\CachePluginBase;
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function slider_views_pre_render(\Drupal\views\ViewExecutable $view) {
+  if ($view->id() == 'news') {
+    $view->element['#attached']['library'][] = 'slider/slider';
+  }
+}
+
+/**
+ * Implements hook_views_post_render().
+ */
+function slider_views_post_render(ViewExecutable $view, &$output, CachePluginBase $cache) {
+  if ($view->id() == 'news') {
+    $date = new DrupalDateTime();
+    $date = $date->format('j F, Y');
+    $title = $view->getTitle();
+    $view->setTitle($title . ' - ' . $date);
+
+    // Modify the $output array.
+    if (\Drupal::currentUser()->isAuthenticated()) {
+      $output['#theme'][] = 'views_view__news__authenticated';
+    }
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function slider_views_query_alter(Drupal\views\ViewExecutable $view, Drupal\views\Plugin\views\query\QueryPluginBase $query) {
+  if ($view->id() === 'search_content') {
+    $keys = \Drupal::request()->query->get('keys');
+    if (!isset($keys) || empty($keys)) {
+      /** @var \Drupal\search_api\Plugin\views\query\SearchApiQuery $query */
+      $query->sort('sticky', 'DESC');
+      $query->sort('created', 'DESC');
+    }
+  }
+
+  // Not sure if this is an instance of \Drupal\views\Plugin\views\query\Sql or
+  // something else? Use gettype() to find out.
+  # echo gettype($query);
+}
